@@ -13,7 +13,7 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-16 lg:px-10 lg:py-24">
-      <section className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+      <section className="grid gap-12 lg:grid-cols-[1.6fr_1fr] lg:gap-16">
         <div className="flex flex-col justify-center">
           <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
             Fakultät für Mathematik · Universität Wien
@@ -47,17 +47,16 @@ export default async function HomePage() {
             </p>
           )}
         </div>
-        <div className="order-first lg:order-last">
-          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-border bg-subtle">
-            <Image
-              src="/heroimage.jpg"
-              alt="Johann Cigler"
-              fill
-              className="object-cover"
-              priority
-              sizes="(max-width: 1024px) 100vw, 40vw"
-            />
-          </div>
+        <div className="order-first flex justify-center lg:order-last lg:justify-end">
+          <Image
+            src="/heroimage.jpg"
+            alt="Johann Cigler"
+            width={264}
+            height={397}
+            className="h-auto w-full max-w-[260px] rounded-sm border border-border bg-subtle"
+            priority
+            sizes="(max-width: 1024px) 260px, 260px"
+          />
         </div>
       </section>
 

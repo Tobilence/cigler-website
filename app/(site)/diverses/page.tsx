@@ -22,38 +22,55 @@ export default async function DiversesPage() {
       />
       <ul className="mt-10 divide-y divide-border">
         {items.map((item) => {
-          const titleEl = item.url ? (
-            <a
-              href={item.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-serif text-lg text-fg underline-offset-4 transition-colors hover:text-accent hover:underline"
-            >
+          const primaryHref = item.url ?? item.fileUrl ?? null;
+          const isPdfPrimary = !item.url && !!item.fileUrl;
+
+          const titleContent = (
+            <>
               {item.title}
-            </a>
-          ) : (
-            <span className="font-serif text-lg text-fg">{item.title}</span>
+              {item.fileUrl && (
+                <span
+                  className="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-accent"
+                  aria-label="PDF available"
+                >
+                  PDF
+                </span>
+              )}
+            </>
           );
 
           return (
             <li key={item._id} className="py-5">
-              <h3 className="leading-snug">
-                {titleEl}
-                {item.fileUrl && (
+              <h3 className="font-serif text-lg leading-snug text-fg">
+                {primaryHref ? (
+                  <a
+                    href={primaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...(isPdfPrimary ? { download: true } : {})}
+                    className="underline-offset-4 transition-colors hover:text-accent hover:underline"
+                  >
+                    {titleContent}
+                  </a>
+                ) : (
+                  titleContent
+                )}
+              </h3>
+              {item.description && (
+                <p className="mt-1 text-sm text-muted">{item.description}</p>
+              )}
+              {item.url && item.fileUrl && (
+                <p className="mt-1 text-xs">
                   <a
                     href={item.fileUrl}
                     target="_blank"
                     rel="noopener noreferrer"
                     download
-                    className="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-accent underline-offset-4 hover:underline"
-                    aria-label={`PDF herunterladen: ${item.title}`}
+                    className="font-mono uppercase tracking-wider text-accent underline-offset-4 hover:underline"
                   >
-                    PDF
+                    PDF herunterladen
                   </a>
-                )}
-              </h3>
-              {item.description && (
-                <p className="mt-1 text-sm text-muted">{item.description}</p>
+                </p>
               )}
             </li>
           );
