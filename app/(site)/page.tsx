@@ -1,0 +1,100 @@
+import Image from "next/image";
+import Link from "next/link";
+
+import { sanityFetch } from "@/sanity/lib/fetch";
+import { urlFor } from "@/sanity/lib/image";
+import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
+import type { SiteSettings } from "@/sanity/lib/types";
+
+export default async function HomePage() {
+  const settings = await sanityFetch<SiteSettings | null>({
+    query: SITE_SETTINGS_QUERY,
+    tags: ["siteSettings"],
+  });
+
+  const portraitSrc = settings?.portrait?.asset
+    ? urlFor(settings.portrait).width(640).height(800).fit("crop").url()
+    : null;
+
+  return (
+    <div className="mx-auto max-w-5xl px-6 py-16 lg:px-10 lg:py-24">
+      <section className="grid gap-12 lg:grid-cols-[1.4fr_1fr] lg:gap-16">
+        <div className="flex flex-col justify-center">
+          <p className="text-xs font-medium uppercase tracking-[0.2em] text-accent">
+            Fakultät für Mathematik · Universität Wien
+          </p>
+          <h1 className="mt-4 font-serif text-5xl tracking-tight text-fg sm:text-6xl lg:text-7xl">
+            {settings?.name ?? "Johann Cigler"}
+          </h1>
+          {settings?.title && (
+            <p className="mt-3 font-serif text-xl text-muted sm:text-2xl">
+              {settings.title}
+            </p>
+          )}
+          {settings?.affiliations && settings.affiliations.length > 0 && (
+            <ul className="mt-6 space-y-1 text-base text-muted">
+              {settings.affiliations.map((aff, idx) => (
+                <li key={`${aff}-${idx}`}>{aff}</li>
+              ))}
+            </ul>
+          )}
+          {settings?.email && (
+            <a
+              href={`mailto:${settings.email}`}
+              className="mt-2 inline-block text-base text-muted underline-offset-4 transition-colors hover:text-accent hover:underline"
+            >
+              {settings.email}
+            </a>
+          )}
+          {settings?.intro && (
+            <p className="mt-8 max-w-xl font-serif text-lg leading-relaxed text-fg/90">
+              {settings.intro}
+            </p>
+          )}
+        </div>
+        {portraitSrc && (
+          <div className="order-first lg:order-last">
+            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-border bg-subtle">
+              <Image
+                src={portraitSrc}
+                alt={settings?.portrait?.alt || settings?.name || "Portrait"}
+                fill
+                className="object-cover"
+                placeholder={
+                  settings?.portrait?.asset?.metadata?.lqip ? "blur" : "empty"
+                }
+                blurDataURL={
+                  settings?.portrait?.asset?.metadata?.lqip ?? undefined
+                }
+                priority
+                sizes="(max-width: 1024px) 100vw, 40vw"
+              />
+            </div>
+          </div>
+        )}
+      </section>
+
+      <section className="mt-20 border-t border-border pt-10">
+        <h2 className="font-serif text-2xl tracking-tight text-fg">Inhalt</h2>
+        <ul className="mt-6 grid gap-x-10 gap-y-3 text-base sm:grid-cols-2">
+          {settings?.navItems?.map((item) => (
+            <li key={item._key}>
+              <Link
+                href={item.href}
+                className="group flex items-baseline justify-between gap-4 border-b border-border/60 py-3 text-fg transition-colors hover:text-accent"
+              >
+                <span className="font-serif text-lg">{item.label}</span>
+                <span
+                  aria-hidden
+                  className="text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent"
+                >
+                  →
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </div>
+  );
+}
