@@ -1,6 +1,5 @@
 import { PageHeader } from "@/components/page-header";
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { resolveLink } from "@/sanity/lib/links";
 import { LECTURE_NOTES_QUERY } from "@/sanity/lib/queries";
 import type { LectureNote } from "@/sanity/lib/types";
 
@@ -15,7 +14,7 @@ export default async function SkriptenPage() {
   });
 
   return (
-    <div className="mx-auto max-w-3xl px-6 py-16 lg:px-10 lg:py-24">
+    <div className="mx-auto max-w-4xl px-6 py-16 lg:px-10 lg:py-24">
       <PageHeader
         eyebrow="Vorlesungsskripten"
         title="Skripten"
@@ -23,40 +22,57 @@ export default async function SkriptenPage() {
       />
       <ul className="mt-10 divide-y divide-border">
         {notes.map((note) => {
-          const link = resolveLink(note);
-          const content = (
+          const primaryHref = note.url ?? note.fileUrl ?? null;
+          const isPdfPrimary = !note.url && !!note.fileUrl;
+
+          const titleContent = (
             <>
-              <span className="font-serif text-lg">
-                {note.title}
-                {note.version && (
-                  <span className="ml-2 font-mono text-sm text-muted">
-                    v{note.version}
-                  </span>
-                )}
-              </span>
-              <span
-                aria-hidden
-                className="text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent"
-              >
-                ↓
-              </span>
+              {note.title}
+              {note.version && (
+                <span className="ml-2 font-mono text-sm text-muted">
+                  v{note.version}
+                </span>
+              )}
+              {note.fileUrl && (
+                <span
+                  className="ml-2 align-middle font-mono text-[10px] uppercase tracking-wider text-accent"
+                  aria-label="PDF available"
+                >
+                  PDF
+                </span>
+              )}
             </>
           );
+
           return (
             <li key={note._id} className="py-5">
-              {link ? (
-                <a
-                  href={link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-baseline justify-between gap-4 text-fg transition-colors hover:text-accent"
-                >
-                  {content}
-                </a>
-              ) : (
-                <div className="group flex items-baseline justify-between gap-4 text-fg">
-                  {content}
-                </div>
+              <h3 className="font-serif text-lg leading-snug text-fg">
+                {primaryHref ? (
+                  <a
+                    href={primaryHref}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    {...(isPdfPrimary ? { download: true } : {})}
+                    className="underline-offset-4 transition-colors hover:text-accent hover:underline"
+                  >
+                    {titleContent}
+                  </a>
+                ) : (
+                  titleContent
+                )}
+              </h3>
+              {note.url && note.fileUrl && (
+                <p className="mt-1 text-xs">
+                  <a
+                    href={note.fileUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download
+                    className="font-mono uppercase tracking-wider text-accent underline-offset-4 hover:underline"
+                  >
+                    PDF herunterladen
+                  </a>
+                </p>
               )}
             </li>
           );
