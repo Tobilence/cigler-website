@@ -19,9 +19,9 @@ export default async function NeuerePublikationenPage() {
       <PageHeader
         eyebrow="Aktuelle Arbeiten"
         title="Neuere Publikationen"
-        description="Eine Auswahl jüngerer wissenschaftlicher Arbeiten, geordnet nach Erscheinungsjahr."
+        description="Eine Auswahl jüngerer wissenschaftlicher Arbeiten."
       />
-      <PublicationList publications={publications} showLabel={false} />
+      <PublicationList publications={publications} />
     </div>
   );
 }

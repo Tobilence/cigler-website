@@ -1,8 +1,9 @@
 import { createClient } from "@sanity/client";
 import { readFileSync } from "node:fs";
 
-const token = readFileSync(new URL("../token.txt", import.meta.url), "utf8")
-  .trim();
+const env = readFileSync(new URL("../.env.local", import.meta.url), "utf8");
+const token = env.match(/SANITY_API_READ_TOKEN=(.+)/)?.[1]?.trim();
+if (!token) throw new Error("SANITY_API_READ_TOKEN not found in .env.local");
 
 const client = createClient({
   projectId: "3n3li0ew",

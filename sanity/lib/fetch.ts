@@ -6,7 +6,7 @@ export async function sanityFetch<T>({
   query,
   params = {},
   tags = [],
-  revalidate = 60,
+  revalidate = 3600,
 }: {
   query: string;
   params?: QueryParams;
@@ -14,6 +14,6 @@ export async function sanityFetch<T>({
   revalidate?: number | false;
 }): Promise<T> {
   return client.fetch<T>(query, params, {
-    next: { revalidate: tags.length ? false : revalidate, tags },
+    next: { revalidate, tags },
   });
 }

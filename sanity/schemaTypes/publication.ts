@@ -8,9 +8,20 @@ export const publication = defineType({
   icon: DocumentTextIcon,
   fields: [
     defineField({
-      name: "title",
+      name: "headline",
+      title: "Upper text",
       type: "string",
+      description:
+        "First line shown to the reader. Typically authors and title.",
       validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: "details",
+      title: "Lower text",
+      type: "text",
+      rows: 3,
+      description:
+        "Second line. Typically journal, year, pages, or arXiv identifier.",
     }),
     defineField({
       name: "category",
@@ -27,44 +38,17 @@ export const publication = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "label",
-      title: "Label",
-      type: "string",
-      description: 'Original numbering, e.g. "[A]", "[1]", "[56]"',
-    }),
-    defineField({
-      name: "authors",
-      title: "Co-authors",
-      type: "string",
-      description:
-        'Co-authors aside from Johann Cigler, e.g. "gem. m. Christian Krattenthaler".',
-    }),
-    defineField({
-      name: "citation",
-      title: "Citation",
-      type: "text",
-      rows: 2,
-      description:
-        "Journal, publisher, volume, year, pages — full bibliographic info as a single string.",
-    }),
-    defineField({
-      name: "year",
-      title: "Year",
-      type: "number",
-      description: "Used for sorting and grouping.",
-      validation: (rule) => rule.integer().min(1900).max(2100),
-    }),
-    defineField({
-      name: "identifier",
-      title: "Identifier",
-      type: "string",
-      description: 'e.g. "arXiv:2003.01676" or "arXiv math CO/0507225"',
+      name: "highlighted",
+      title: "Show in 'Neuere Publikationen'",
+      type: "boolean",
+      initialValue: false,
     }),
     defineField({
       name: "url",
       title: "URL",
       type: "url",
-      description: "External link (e.g. arXiv, journal page). Ignored when a PDF is uploaded.",
+      description:
+        "External link (e.g. arXiv, journal page). Ignored when a PDF is uploaded.",
       validation: (rule) =>
         rule.uri({ scheme: ["http", "https"], allowRelative: false }),
     }),
@@ -72,52 +56,34 @@ export const publication = defineType({
       name: "file",
       title: "PDF",
       type: "file",
-      description: "Upload a PDF to host the publication directly. Takes precedence over the URL.",
+      description:
+        "Upload a PDF to host the publication directly. Takes precedence over the URL.",
       options: { accept: "application/pdf" },
-    }),
-    defineField({
-      name: "notes",
-      title: "Notes",
-      type: "text",
-      rows: 2,
-    }),
-    defineField({
-      name: "highlighted",
-      title: "Show in 'Neuere Publikationen'",
-      type: "boolean",
-      initialValue: false,
     }),
     defineField({
       name: "sortOrder",
       title: "Sort order",
       type: "number",
-      description: "Optional. Lower numbers appear first.",
+      description: "Lower numbers appear first.",
     }),
   ],
   orderings: [
     {
-      title: "Label (natural)",
-      name: "labelAsc",
+      title: "Manual order",
+      name: "sortOrderAsc",
       by: [{ field: "sortOrder", direction: "asc" }],
-    },
-    {
-      title: "Year (newest first)",
-      name: "yearDesc",
-      by: [{ field: "year", direction: "desc" }],
     },
   ],
   preview: {
     select: {
-      title: "title",
-      label: "label",
+      title: "headline",
+      subtitle: "details",
       category: "category",
-      year: "year",
     },
-    prepare({ title, label, category, year }) {
-      const prefix = label ? `${label} ` : "";
+    prepare({ title, subtitle, category }) {
       return {
-        title: `${prefix}${title ?? ""}`,
-        subtitle: [category, year].filter(Boolean).join(" · "),
+        title: title ?? "(no headline)",
+        subtitle: [category, subtitle].filter(Boolean).join(" · "),
       };
     },
   },

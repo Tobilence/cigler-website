@@ -30,16 +30,11 @@ export type PublicationCategory = "book" | "paper" | "preprint";
 
 export type Publication = {
   _id: string;
-  title: string;
+  headline: string;
+  details?: string | null;
   category: PublicationCategory;
-  label?: string | null;
-  authors?: string | null;
-  citation?: string | null;
-  year?: number | null;
-  identifier?: string | null;
   url?: string | null;
   fileUrl?: string | null;
-  notes?: string | null;
   highlighted?: boolean | null;
 };
 

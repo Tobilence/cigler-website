@@ -20,9 +20,8 @@ export default async function PreprintsPage() {
       <PageHeader
         eyebrow="Vorabdrucke"
         title="Preprints"
-        description="Unveröffentlichte und in Vorbereitung befindliche Arbeiten — größtenteils auch auf arXiv verfügbar."
       />
-      <PublicationList publications={publications} showLabel={false} />
+      <PublicationList publications={publications} />
     </div>
   );
 }

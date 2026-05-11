@@ -2,7 +2,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { sanityFetch } from "@/sanity/lib/fetch";
-import { urlFor } from "@/sanity/lib/image";
 import { SITE_SETTINGS_QUERY } from "@/sanity/lib/queries";
 import type { SiteSettings } from "@/sanity/lib/types";
 
@@ -11,10 +10,6 @@ export default async function HomePage() {
     query: SITE_SETTINGS_QUERY,
     tags: ["siteSettings"],
   });
-
-  const portraitSrc = settings?.portrait?.asset
-    ? urlFor(settings.portrait).width(640).height(800).fit("crop").url()
-    : null;
 
   return (
     <div className="mx-auto max-w-5xl px-6 py-16 lg:px-10 lg:py-24">
@@ -52,26 +47,18 @@ export default async function HomePage() {
             </p>
           )}
         </div>
-        {portraitSrc && (
-          <div className="order-first lg:order-last">
-            <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-border bg-subtle">
-              <Image
-                src={portraitSrc}
-                alt={settings?.portrait?.alt || settings?.name || "Portrait"}
-                fill
-                className="object-cover"
-                placeholder={
-                  settings?.portrait?.asset?.metadata?.lqip ? "blur" : "empty"
-                }
-                blurDataURL={
-                  settings?.portrait?.asset?.metadata?.lqip ?? undefined
-                }
-                priority
-                sizes="(max-width: 1024px) 100vw, 40vw"
-              />
-            </div>
+        <div className="order-first lg:order-last">
+          <div className="relative aspect-[4/5] w-full overflow-hidden rounded-sm border border-border bg-subtle">
+            <Image
+              src="/heroimage.jpg"
+              alt="Johann Cigler"
+              fill
+              className="object-cover"
+              priority
+              sizes="(max-width: 1024px) 100vw, 40vw"
+            />
           </div>
-        )}
+        </div>
       </section>
 
       <section className="mt-20 border-t border-border pt-10">

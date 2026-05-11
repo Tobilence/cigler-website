@@ -23,35 +23,30 @@ export const SITE_SETTINGS_QUERY = defineQuery(/* groq */ `
 
 const publicationFields = /* groq */ `
   _id,
-  title,
+  headline,
+  details,
   category,
-  label,
-  authors,
-  citation,
-  year,
-  identifier,
   url,
   "fileUrl": file.asset->url,
-  notes,
   highlighted
 `;
 
 export const PUBLICATIONS_QUERY = defineQuery(/* groq */ `
-  *[_type == "publication"] | order(sortOrder asc, year asc, label asc){
+  *[_type == "publication"] | order(sortOrder asc){
     ${publicationFields}
   }
 `);
 
 export const PUBLICATIONS_BY_CATEGORY_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && category == $category]
-  | order(sortOrder asc, year asc, label asc){
+  | order(sortOrder asc){
     ${publicationFields}
   }
 `);
 
 export const HIGHLIGHTED_PUBLICATIONS_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && highlighted == true]
-  | order(year desc, sortOrder asc){
+  | order(sortOrder asc){
     ${publicationFields}
   }
 `);
