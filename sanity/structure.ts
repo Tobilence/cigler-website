@@ -31,6 +31,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("student").title("Students").icon(UserIcon),
       S.documentTypeListItem("cvEvent").title("CV").icon(CalendarIcon),
       S.documentTypeListItem("miscellaneous")
-        .title("Miscellaneous")
+        .title("Diverses")
         .icon(EllipsisHorizontalIcon),
     ]);

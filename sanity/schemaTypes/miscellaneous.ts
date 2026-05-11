@@ -3,7 +3,7 @@ import { EllipsisHorizontalIcon } from "@sanity/icons";
 
 export const miscellaneous = defineType({
   name: "miscellaneous",
-  title: "Miscellaneous Item",
+  title: "Diverses Item",
   type: "document",
   icon: EllipsisHorizontalIcon,
   fields: [
@@ -16,7 +16,7 @@ export const miscellaneous = defineType({
       name: "url",
       title: "URL",
       type: "url",
-      description: "External link. Ignored when a PDF is uploaded.",
+      description: "Optional external link.",
       validation: (rule) =>
         rule.uri({ scheme: ["http", "https"], allowRelative: false }),
     }),
@@ -24,7 +24,8 @@ export const miscellaneous = defineType({
       name: "file",
       title: "PDF",
       type: "file",
-      description: "Upload a PDF. Takes precedence over the URL.",
+      description:
+        "Optional PDF download. Can be used alongside the URL.",
       options: { accept: "application/pdf" },
     }),
     defineField({
