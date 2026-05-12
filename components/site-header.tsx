@@ -21,7 +21,7 @@ export function SiteHeader({ name, navItems }: Props) {
         >
           {name ?? "Johann Cigler"}
         </Link>
-        <nav className="ml-auto hidden md:block">
+        <nav className="ml-auto hidden lg:block">
           <ul className="flex items-center gap-x-6 text-sm">
             {items.map((item) => (
               <li key={item._key} className="shrink-0">
@@ -35,7 +35,7 @@ export function SiteHeader({ name, navItems }: Props) {
             ))}
           </ul>
         </nav>
-        <div className="ml-auto md:hidden">
+        <div className="ml-auto lg:hidden">
           <MobileNav navItems={items} />
         </div>
       </div>
