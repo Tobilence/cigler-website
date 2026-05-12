@@ -60,22 +60,16 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section className="mt-20 border-t border-border pt-10">
-        <h2 className="font-serif text-2xl tracking-tight text-fg">Inhalt</h2>
-        <ul className="mt-6 grid gap-x-10 gap-y-3 text-base sm:grid-cols-2">
+      <section className="mt-20 border-border pt-10">
+        {/* <h2 className="font-serif text-3xl tracking-tight text-fg">Inhalt</h2> */}
+        <ul className="mt-8 grid gap-4 sm:grid-cols-2">
           {settings?.navItems?.map((item) => (
             <li key={item._key}>
               <Link
                 href={item.href}
-                className="group flex items-baseline justify-between gap-4 border-b border-border/60 py-3 text-fg transition-colors hover:text-accent"
+                className="flex h-full items-center justify-start rounded-sm border border-border bg-subtle/40 px-6 py-6 text-center font-serif text-xl text-fg transition-colors hover:border-accent hover:bg-subtle hover:text-accent"
               >
-                <span className="font-serif text-lg">{item.label}</span>
-                <span
-                  aria-hidden
-                  className="text-muted transition-transform group-hover:translate-x-1 group-hover:text-accent"
-                >
-                  →
-                </span>
+                {item.label}
               </Link>
             </li>
           ))}
