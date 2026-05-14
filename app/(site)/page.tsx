@@ -6,7 +6,7 @@ const TITLE = "emer. O. Univ.-Prof.";
 const AFFILIATIONS = ["Fakultät für Mathematik", "Universität Wien"];
 const EMAIL = "johann.cigler@univie.ac.at";
 const INTRO =
-  "Emeritierter Ordentlicher Universitätsprofessor an der Fakultät für Mathematik der Universität Wien. Meine Forschung umfasst Kombinatorik, q-Identitäten, Fibonacci- und Catalan-Zahlen sowie Hankel-Determinanten.";
+  "Meine Forschung umfasst Kombinatorik, q-Identitäten, Fibonacci- und Catalan-Zahlen sowie Hankel-Determinanten.";
 
 const NAV_ITEMS = [
   { key: "n1", href: "/publikationen", label: "Schriftenverzeichnis" },
