@@ -26,38 +26,29 @@ const publicationFields = /* groq */ `
   headline,
   details,
   category,
+  date,
   url,
   "fileUrl": file.asset->url,
   highlighted
 `;
 
 export const PUBLICATIONS_QUERY = defineQuery(/* groq */ `
-  *[_type == "publication"] | order(sortOrder asc){
+  *[_type == "publication"] | order(date desc, sortOrder asc){
     ${publicationFields}
   }
 `);
 
 export const PUBLICATIONS_BY_CATEGORY_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && category == $category]
-  | order(sortOrder asc){
+  | order(date desc, sortOrder asc){
     ${publicationFields}
   }
 `);
 
 export const HIGHLIGHTED_PUBLICATIONS_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && highlighted == true]
-  | order(sortOrder asc){
+  | order(date desc, sortOrder asc){
     ${publicationFields}
-  }
-`);
-
-export const STUDENTS_QUERY = defineQuery(/* groq */ `
-  *[_type == "student"] | order(year asc){
-    _id,
-    name,
-    kind,
-    year,
-    url
   }
 `);
 

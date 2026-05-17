@@ -33,17 +33,10 @@ export type Publication = {
   headline: string;
   details?: string | null;
   category: PublicationCategory;
+  date?: string | null;
   url?: string | null;
   fileUrl?: string | null;
   highlighted?: boolean | null;
-};
-
-export type Student = {
-  _id: string;
-  name: string;
-  kind: "dissertant" | "diplomand";
-  year?: number | null;
-  url?: string | null;
 };
 
 export type CvEvent = {

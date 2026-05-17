@@ -2,7 +2,6 @@ import type { StructureResolver } from "sanity/structure";
 import {
   CogIcon,
   DocumentTextIcon,
-  UserIcon,
   CalendarIcon,
   BookIcon,
   EllipsisHorizontalIcon,
@@ -28,7 +27,6 @@ export const structure: StructureResolver = (S) =>
       S.documentTypeListItem("lectureNote")
         .title("Lecture Notes")
         .icon(BookIcon),
-      S.documentTypeListItem("student").title("Students").icon(UserIcon),
       S.documentTypeListItem("cvEvent").title("CV").icon(CalendarIcon),
       S.documentTypeListItem("miscellaneous")
         .title("Diverses")

@@ -13,9 +13,8 @@ const NAV_ITEMS = [
   { key: "n2", href: "/neuere-publikationen", label: "Neuere Publikationen" },
   { key: "n3", href: "/preprints", label: "Preprints" },
   { key: "n4", href: "/skripten", label: "Skripten" },
-  { key: "n5", href: "/personen", label: "Dissertanten & Diplomanden" },
-  { key: "n6", href: "/lebenslauf", label: "Lebenslauf" },
-  { key: "n7", href: "/diverses", label: "Diverses" },
+  { key: "n5", href: "/lebenslauf", label: "Lebenslauf" },
+  { key: "n6", href: "/diverses", label: "Diverses" },
 ];
 
 export default function HomePage() {

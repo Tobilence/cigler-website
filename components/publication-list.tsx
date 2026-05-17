@@ -5,6 +5,18 @@ type Props = {
   publications: Publication[];
 };
 
+const dateFormatter = new Intl.DateTimeFormat("de-AT", {
+  year: "numeric",
+  month: "long",
+});
+
+function formatDate(date: string | null | undefined) {
+  if (!date) return null;
+  const parsed = new Date(date);
+  if (Number.isNaN(parsed.getTime())) return null;
+  return dateFormatter.format(parsed);
+}
+
 export function PublicationList({ publications }: Props) {
   if (!publications.length) {
     return (
@@ -16,9 +28,15 @@ export function PublicationList({ publications }: Props) {
     <ol className="mt-10 divide-y divide-border">
       {publications.map((pub) => {
         const link = resolveLink(pub);
+        const formattedDate = formatDate(pub.date);
         return (
           <li key={pub._id} className="py-6">
-            <h3 className="font-serif text-lg leading-snug text-fg">
+            {formattedDate && (
+              <p className="text-xs font-medium uppercase tracking-[0.18em] text-accent">
+                <time dateTime={pub.date ?? undefined}>{formattedDate}</time>
+              </p>
+            )}
+            <h3 className="mt-1 font-serif text-lg leading-snug text-fg">
               {link ? (
                 <a
                   href={link}
