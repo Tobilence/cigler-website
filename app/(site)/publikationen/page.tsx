@@ -8,11 +8,21 @@ export const metadata = {
   title: "Schriftenverzeichnis · Johann Cigler",
 };
 
-const categoryLabels: Record<Publication["category"], string> = {
+const VISIBLE_CATEGORIES = ["book", "paper"] as const;
+
+const categoryLabels: Record<(typeof VISIBLE_CATEGORIES)[number], string> = {
   book: "Bücher",
   paper: "Papers",
-  preprint: "Preprints",
 };
+
+// Pulls the value inside leading brackets, e.g. "[58] Some title" -> "58",
+// "[A] Lineare Algebra" -> "A". Falls back to the full headline.
+function bracketKey(headline: string): string {
+  const match = headline.match(/^\s*\[([^\]]+)\]/);
+  return match ? match[1] : headline;
+}
+
+const collator = new Intl.Collator("en", { numeric: true, sensitivity: "base" });
 
 export default async function PublikationenPage() {
   const publications = await sanityFetch<Publication[]>({
@@ -20,14 +30,21 @@ export default async function PublikationenPage() {
     tags: ["publication"],
   });
 
-  const grouped: Record<Publication["category"], Publication[]> = {
+  const grouped: Record<(typeof VISIBLE_CATEGORIES)[number], Publication[]> = {
     book: [],
     paper: [],
-    preprint: [],
   };
 
   for (const pub of publications) {
-    grouped[pub.category]?.push(pub);
+    if (pub.category in grouped) {
+      grouped[pub.category as (typeof VISIBLE_CATEGORIES)[number]].push(pub);
+    }
+  }
+
+  for (const category of VISIBLE_CATEGORIES) {
+    grouped[category].sort((a, b) =>
+      collator.compare(bracketKey(b.headline), bracketKey(a.headline)),
+    );
   }
 
   return (
@@ -35,10 +52,10 @@ export default async function PublikationenPage() {
       <PageHeader
         eyebrow="Schriftenverzeichnis"
         title="Publikationen"
-        description="Vollständiges Verzeichnis von Büchern, wissenschaftlichen Arbeiten und Preprints."
+        description="Vollständiges Verzeichnis von Büchern und wissenschaftlichen Arbeiten."
       />
 
-      {(["book", "paper", "preprint"] as const).map((category) => {
+      {VISIBLE_CATEGORIES.map((category) => {
         const items = grouped[category];
         if (!items.length) return null;
         return (

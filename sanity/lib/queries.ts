@@ -33,21 +33,21 @@ const publicationFields = /* groq */ `
 `;
 
 export const PUBLICATIONS_QUERY = defineQuery(/* groq */ `
-  *[_type == "publication"] | order(date desc, sortOrder asc){
+  *[_type == "publication"]{
     ${publicationFields}
   }
 `);
 
 export const PUBLICATIONS_BY_CATEGORY_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && category == $category]
-  | order(date desc, sortOrder asc){
+  | order(date desc){
     ${publicationFields}
   }
 `);
 
 export const HIGHLIGHTED_PUBLICATIONS_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && highlighted == true]
-  | order(date desc, sortOrder asc){
+  | order(date desc){
     ${publicationFields}
   }
 `);

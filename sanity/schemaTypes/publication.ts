@@ -68,27 +68,12 @@ export const publication = defineType({
         "Publication date. Used to sort preprints (newest first) and shown next to the entry.",
       options: { dateFormat: "YYYY-MM-DD" },
     }),
-    defineField({
-      name: "sortOrder",
-      title: "Sort order",
-      type: "number",
-      description:
-        "Optional manual override. Lower numbers appear first when no date is set.",
-    }),
   ],
   orderings: [
     {
       title: "Date, newest first",
       name: "dateDesc",
-      by: [
-        { field: "date", direction: "desc" },
-        { field: "sortOrder", direction: "asc" },
-      ],
-    },
-    {
-      title: "Manual order",
-      name: "sortOrderAsc",
-      by: [{ field: "sortOrder", direction: "asc" }],
+      by: [{ field: "date", direction: "desc" }],
     },
   ],
   preview: {
