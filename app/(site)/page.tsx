@@ -5,8 +5,6 @@ const NAME = "Johann Cigler";
 const TITLE = "emer. O. Univ.-Prof.";
 const AFFILIATIONS = ["Fakultät für Mathematik", "Universität Wien"];
 const EMAIL = "johann.cigler@univie.ac.at";
-const INTRO =
-  "Meine Forschung umfasst Kombinatorik, q-Identitäten, Fibonacci- und Catalan-Zahlen sowie Hankel-Determinanten.";
 
 const NAV_ITEMS = [
   { key: "n1", href: "/publikationen", label: "Publikationen" },
@@ -41,9 +39,6 @@ export default function HomePage() {
           >
             {EMAIL}
           </a>
-          <p className="mt-8 max-w-xl font-serif text-lg leading-relaxed text-fg/90">
-            {INTRO}
-          </p>
         </div>
         <div className="order-first flex justify-center md:order-last md:justify-end">
           <Image
