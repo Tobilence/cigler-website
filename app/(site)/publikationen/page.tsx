@@ -5,7 +5,7 @@ import { PUBLICATIONS_QUERY } from "@/sanity/lib/queries";
 import type { Publication } from "@/sanity/lib/types";
 
 export const metadata = {
-  title: "Schriftenverzeichnis · Johann Cigler",
+  title: "Publikationen · Johann Cigler",
 };
 
 const VISIBLE_CATEGORIES = ["book", "paper"] as const;
@@ -41,16 +41,17 @@ export default async function PublikationenPage() {
     }
   }
 
-  for (const category of VISIBLE_CATEGORIES) {
-    grouped[category].sort((a, b) =>
-      collator.compare(bracketKey(b.headline), bracketKey(a.headline)),
-    );
-  }
+  // Books: ascending ([A], [B], ...). Papers: descending (newest number first).
+  grouped.book.sort((a, b) =>
+    collator.compare(bracketKey(a.headline), bracketKey(b.headline)),
+  );
+  grouped.paper.sort((a, b) =>
+    collator.compare(bracketKey(b.headline), bracketKey(a.headline)),
+  );
 
   return (
     <div className="mx-auto max-w-4xl px-6 py-16 lg:px-10 lg:py-24">
       <PageHeader
-        eyebrow="Schriftenverzeichnis"
         title="Publikationen"
         description="Vollständiges Verzeichnis von Büchern und wissenschaftlichen Arbeiten."
       />

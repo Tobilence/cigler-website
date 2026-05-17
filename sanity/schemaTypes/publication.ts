@@ -38,12 +38,6 @@ export const publication = defineType({
       validation: (rule) => rule.required(),
     }),
     defineField({
-      name: "highlighted",
-      title: "Show in 'Neuere Publikationen'",
-      type: "boolean",
-      initialValue: false,
-    }),
-    defineField({
       name: "url",
       title: "URL",
       type: "url",

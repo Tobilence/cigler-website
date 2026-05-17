@@ -9,12 +9,11 @@ const INTRO =
   "Meine Forschung umfasst Kombinatorik, q-Identitäten, Fibonacci- und Catalan-Zahlen sowie Hankel-Determinanten.";
 
 const NAV_ITEMS = [
-  { key: "n1", href: "/publikationen", label: "Schriftenverzeichnis" },
-  { key: "n2", href: "/neuere-publikationen", label: "Neuere Publikationen" },
-  { key: "n3", href: "/preprints", label: "Preprints" },
-  { key: "n4", href: "/skripten", label: "Skripten" },
-  { key: "n5", href: "/lebenslauf", label: "Lebenslauf" },
-  { key: "n6", href: "/diverses", label: "Diverses" },
+  { key: "n1", href: "/publikationen", label: "Publikationen" },
+  { key: "n2", href: "/preprints", label: "Preprints" },
+  { key: "n3", href: "/skripten", label: "Skripten" },
+  { key: "n4", href: "/lebenslauf", label: "Lebenslauf" },
+  { key: "n5", href: "/diverses", label: "Diverses" },
 ];
 
 export default function HomePage() {

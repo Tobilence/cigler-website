@@ -28,8 +28,7 @@ const publicationFields = /* groq */ `
   category,
   date,
   url,
-  "fileUrl": file.asset->url,
-  highlighted
+  "fileUrl": file.asset->url
 `;
 
 export const PUBLICATIONS_QUERY = defineQuery(/* groq */ `
@@ -40,13 +39,6 @@ export const PUBLICATIONS_QUERY = defineQuery(/* groq */ `
 
 export const PUBLICATIONS_BY_CATEGORY_QUERY = defineQuery(/* groq */ `
   *[_type == "publication" && category == $category]
-  | order(date desc){
-    ${publicationFields}
-  }
-`);
-
-export const HIGHLIGHTED_PUBLICATIONS_QUERY = defineQuery(/* groq */ `
-  *[_type == "publication" && highlighted == true]
   | order(date desc){
     ${publicationFields}
   }

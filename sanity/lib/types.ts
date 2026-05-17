@@ -36,7 +36,6 @@ export type Publication = {
   date?: string | null;
   url?: string | null;
   fileUrl?: string | null;
-  highlighted?: boolean | null;
 };
 
 export type CvEvent = {
